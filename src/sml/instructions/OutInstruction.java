@@ -3,17 +3,15 @@ package sml.instructions;
 import sml.Instruction;
 import sml.Machine;
 
-public final class DivInstruction extends Instruction {
+public final class OutInstruction extends Instruction {
 
-    private int result;
     private int op1;
-    private int op2;
 
     /**
      * @param label of the instruction
      * @param op    the operands
      */
-    public DivInstruction(String label, String op) { super(label, op); }
+    public OutInstruction(String label, String op) { super(label, op); }
 
     /**
      * @param label     of the instruction
@@ -21,11 +19,9 @@ public final class DivInstruction extends Instruction {
      * @param operator1 the first operand
      * @param operator2 the second operand
      */
-    public DivInstruction(String label, int res, int operator1, int operator2) {
-        this(label, "div");
-        this.result = res;
+    public OutInstruction(String label, int res, int operator1, int operator2) {
+        this(label, "out");
         this.op1 = operator1;
-        this.op2 = operator2;
     }
 
     /**
@@ -37,8 +33,7 @@ public final class DivInstruction extends Instruction {
     @Override
     public void execute(Machine m) {
         int value1 = m.getRegisters().getRegister(op1);
-        int value2 = m.getRegisters().getRegister(op2);
-        m.getRegisters().setRegister(result, value1 / value2);
+        this.toString();
     }
 
     /**
@@ -48,7 +43,8 @@ public final class DivInstruction extends Instruction {
      */
     @Override
     public String toString() {
-        return super.toString() + " " + op1 + " / " + op2 + " to " + result;
+        return super.toString() + " " + op1;
     }
+
 
 }
