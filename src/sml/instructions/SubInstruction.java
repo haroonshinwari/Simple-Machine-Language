@@ -32,6 +32,18 @@ public final class SubInstruction extends Instruction {
         this.op2 = operator2;
     }
 
+    /**
+     * Execute the instruction, probably modifying the registers.
+     *
+     * @param m the machine under which the instruction executes
+     */
+    @Override
+    public void execute(Machine m) {
+        int value1 = m.getRegisters().getRegister(op1);
+        int value2 = m.getRegisters().getRegister(op2);
+        m.getRegisters().setRegister(result, value2 - value1);
+    }
+
 
 
 }
