@@ -3,7 +3,8 @@ package sml.instructions;
 import sml.Instruction;
 import sml.Machine;
 
-public final class OutInstruction extends Instruction {
+public final class BnzInstruction extends Instruction {
+
 
     private int op1;
 
@@ -11,14 +12,16 @@ public final class OutInstruction extends Instruction {
      * @param label of the instruction
      * @param op    the operands
      */
-    public OutInstruction(String label, String op) { super(label, op); }
+    public BnzInstruction(String label, String op) { super(label, op); }
 
     /**
      * @param label     of the instruction
+     * @param label2    of the computation
      * @param operator1 the first operand
+     * @param operator2 the second operand
      */
-    public OutInstruction(String label, int operator1) {
-        this(label, "out");
+    public BnzInstruction(String label, int res, int operator1, int operator2) {
+        this(label, "bnz");
         this.op1 = operator1;
     }
 
@@ -43,6 +46,7 @@ public final class OutInstruction extends Instruction {
     public String toString() {
         return super.toString() + " " + op1;
     }
+
 
 
 }
