@@ -7,6 +7,7 @@ public final class BnzInstruction extends Instruction {
 
 
     private int op1;
+    private String op2;
 
     /**
      * @param label of the instruction
@@ -18,11 +19,12 @@ public final class BnzInstruction extends Instruction {
      * @param label     of the instruction
      * @param label2    of the computation
      * @param operator1 the first operand
-     * @param operator2 the second operand
      */
-    public BnzInstruction(String label, int res, int operator1, int operator2) {
+    public BnzInstruction(String label, int operator1, String label2) {
         this(label, "bnz");
         this.op1 = operator1;
+        this.op2 = label2;
+
     }
 
     /**
@@ -34,7 +36,10 @@ public final class BnzInstruction extends Instruction {
     @Override
     public void execute(Machine m) {
         int value1 = m.getRegisters().getRegister(op1);
-        this.toString();
+        int branchInstruction = m.getLabels().indexOf(op2);
+        if (value1 != 0) {
+            m.setPc(branchInstruction);
+        }
     }
 
     /**

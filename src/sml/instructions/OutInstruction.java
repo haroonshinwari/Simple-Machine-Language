@@ -30,8 +30,8 @@ public final class OutInstruction extends Instruction {
 
     @Override
     public void execute(Machine m) {
-        int value1 = m.getRegisters().getRegister(op1);
-        this.toString();
+        System.out.println(m.getRegisters().getRegister(op1));
+
     }
 
     /**
