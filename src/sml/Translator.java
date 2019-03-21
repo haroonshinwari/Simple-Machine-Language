@@ -4,6 +4,8 @@ import sml.instructions.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -87,44 +89,42 @@ public final class Translator {
         if (line.equals("")) {
             return null;
         }
-
         String ins = scan();
-        switch (ins) {
-            case "add":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new AddInstruction(label, r, s1, s2);
-            case "lin":
-                r = scanInt();
-                s1 = scanInt();
-                return new LinInstruction(label, r, s1);
-            case "sub":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new SubInstruction(label, r, s1, s2);
-            case "mul":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new MulInstruction(label, r, s1, s2);
-            case "div":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new DivInstruction(label, r, s1, s2);
-            case "out":
-                r = scanInt();
-                return new OutInstruction(label, r);
-            case "bnz":
-                r = scanInt();
-                label2 = scan();
-                return new BnzInstruction(label, r, label2);
+        String instr = "sml.instructions." + ins.substring(0, 1).toUpperCase() + ins.substring(1) + "Instruction";
 
+        try {
+            Class insReflectClass = Class.forName(instr);
+            Constructor[] constructors = insReflectClass.getConstructors();
+            int parameters = constructors[1].getParameterCount();
+            Object[] registers = new Object[parameters];
+            Class[] parameterTypes = constructors[1].getParameterTypes();
 
+            registers[0] = label;
+            for (int j = 1; j < registers.length; j++) {
+                if ((parameterTypes[j].getName() == "java.lang.String")) {
+                    registers[j] = scan();
+                } else {
+                    registers[j] = scanInt();
+                }
+            }
 
+            Instruction createIns = (Instruction) constructors[1].newInstance(registers);
+            return createIns;
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
+
+
+
+
+
 
         // You will have to write code here for the other instructions.
 
