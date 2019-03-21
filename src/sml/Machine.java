@@ -29,10 +29,12 @@ public final class Machine {
 
     private int pc;
 
-    {
-        labels = new Labels();
-        prog = new ArrayList<>();
-        pc = 0;
+    public Machine(Labels labels, List<Instruction> prog, Registers registers, int pc) {
+
+        this.labels = labels;
+        this.prog = prog;
+        this.registers = registers;
+        this.pc = pc;
     }
 
     /**
