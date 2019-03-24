@@ -50,7 +50,7 @@ public final class Machine {
         }
 
         Machine m = new Machine(new Labels(new ArrayList()), new ArrayList(), new Registers(), 0);
-        Translator t = new Translator(args[0]);
+        Translator t = Translator.getInstance(args[0]);
         t.readAndTranslate(m.getLabels(), m.getProg());
 
         System.out.println("Here is the program; it has " + m.getProg().size() + " instructions.");
@@ -172,5 +172,14 @@ public final class Machine {
 
     protected boolean canEqual(Object other) {
         return other instanceof Machine;
+    }
+
+    private static Machine machine = null;
+
+    public static Machine getInstance(Labels labels, List<Instruction> prog, Registers registers, int pc) {
+        if (machine == null) {
+            machine = new Machine(labels, prog, registers, pc);
+        }
+        return machine;
     }
 }

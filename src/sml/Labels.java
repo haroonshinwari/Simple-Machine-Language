@@ -13,6 +13,8 @@ import java.util.List;
  */
 public final class Labels {
 
+    private static Labels label = null;
+
     private List<String> labels;
 
     {
@@ -20,7 +22,7 @@ public final class Labels {
     }
 
     //constructor for Labels using Dependency Injection
-    public Labels(ArrayList labels) {
+    public Labels(List<String> labels) {
         this.labels = labels;
     }
 
@@ -81,5 +83,12 @@ public final class Labels {
      */
     public void reset() {
         labels.clear();
+    }
+
+    public static Labels getInstance(List<String> labels) {
+        if ( label == null) {
+            label = new Labels(labels);
+        }
+        return label;
     }
 }

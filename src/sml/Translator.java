@@ -19,6 +19,15 @@ import java.util.Scanner;
  */
 public final class Translator {
 
+    private static Translator translata = null;
+
+    public static Translator getInstance(String file) {
+        if (translata == null) {
+            translata = new Translator(file);
+        }
+        return translata;
+    }
+
     private static final String PATH = "";
 
     // word + line is the part of the current line that's not yet processed

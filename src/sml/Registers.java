@@ -19,7 +19,7 @@ public final class Registers {
     {
         registers = new int[NUMBER_OF_REGISTERS];
     }
-    
+
     public Registers() {
         for (int i = 0; i != registers.length; i++) {
             registers[i] = 0;
@@ -78,5 +78,14 @@ public final class Registers {
     @Override
     public String toString() {
         return " registers=" + Arrays.toString(this.registers);
+    }
+
+    private static Registers regista = null;
+
+    public static Registers getInstance() {
+        if (regista == null) {
+            regista = new Registers();
+        }
+        return regista;
     }
 }
