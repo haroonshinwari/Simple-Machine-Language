@@ -12,10 +12,16 @@ import java.util.List;
  * @author ...
  */
 public final class Labels {
+
     private List<String> labels;
 
     {
-        labels = new ArrayList<>();
+        this.labels = new ArrayList<>();
+    }
+
+    //constructor for Labels using Dependency Injection
+    public Labels(ArrayList labels) {
+        this.labels = labels;
     }
 
     /**

@@ -49,7 +49,7 @@ public final class Machine {
             System.exit(-1);
         }
 
-        Machine m = new Machine();
+        Machine m = new Machine(new Labels(new ArrayList()), new ArrayList(), new Registers(), 0);
         Translator t = new Translator(args[0]);
         t.readAndTranslate(m.getLabels(), m.getProg());
 
